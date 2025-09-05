@@ -36,15 +36,33 @@ class DLL:
             n = Node(temp, data, None)
             temp.next = n
 
+        # Alternative
+        # temp = self.start
+        # if not self.is_empty():
+        #     while temp.next is not None:
+        #         temp = temp.next
+        # n = Node(temp, data, None)
+        # if temp == None:
+        #     self.start = n
+        # else:
+        #     temp.next = n
+
     def insert_after(self, temp, data):
-        if temp is None:
-            return
-        elif temp.next is None:
+        # if temp is None:
+        #     return
+        # elif temp.next is None:
+        #     n = Node(temp, data, temp.next)
+        #     temp.next = n
+        # else:
+        #     n = Node(temp, data, temp.next)
+        #     temp.next.prev = n
+        #     temp.next = n
+
+        # Alternativev
+        if temp is not None:
             n = Node(temp, data, temp.next)
-            temp.next = n
-        else:
-            n = Node(temp, data, temp.next)
-            temp.next.prev = n
+            if temp.next is not None:
+                temp.next.prev = n
             temp.next = n
 
     def insert_before(self, temp, data):
@@ -60,13 +78,19 @@ class DLL:
             temp.prev = n
 
     def delete_first(self):
+        # if not self.is_empty():
+        #     temp = self.start
+        #     if temp.next is not None:
+        #         temp.next.prev = None
+        #         self.start = temp.next
+        #     else:
+        #         self.start = None
+
+        # Alternative
         if not self.is_empty():
-            temp = self.start
-            if temp.next is not None:
-                temp.next.prev = None
-                self.start = temp.next
-            else:
-                self.start = None
+            self.start = self.start.next
+            if self.start is not None:
+                self.start.prev = None
 
     def delete_last(self):
         if not self.is_empty():
@@ -80,25 +104,42 @@ class DLL:
             else:
                 self.start = None
 
+    # def delete_item(self, data):
+        # temp = self.start
+        # if self.is_empty():
+        #     return
+        # elif temp.next is None and temp.item == data:
+        #     self.start = None
+        # elif temp.prev is None and temp.item == data:
+        #     temp.next.prev = None
+        #     self.start = temp.next
+        # else:
+        #     while temp.next is not None:
+        #         if temp.item == data:
+        #             break
+        #         temp = temp.next
+        #     if temp.item == data and temp.next is not None:
+        #         temp.prev.next = temp.next
+        #         temp.next.prev = temp.prev
+        #     elif temp.item == data and temp.next is None:
+        #         temp.prev.next = None
+
+    # Alternative
     def delete_item(self, data):
-        temp = self.start
         if self.is_empty():
-            return
-        elif temp.next is None and temp.item == data:
-            self.start = None
-        elif temp.prev is None and temp.item == data:
-            temp.next.prev = None
-            self.start = temp.next
+            pass
         else:
-            while temp.next is not None:
+            temp = self.start
+            while temp is not None:
                 if temp.item == data:
+                    if temp.next is not None:
+                        temp.next.prev = temp.prev
+                    if temp.prev is not None:
+                        temp.prev.next = temp.next
+                    else:
+                        self.start = temp.next
                     break
                 temp = temp.next
-            if temp.item == data and temp.next is not None:
-                temp.prev.next = temp.next
-                temp.next.prev = temp.prev
-            elif temp.item == data and temp.next is None:
-                temp.prev.next = None
 
     def search(self, data):
         temp = self.start
@@ -122,3 +163,4 @@ class DLLItrator:
         data = self.current.item
         self.current = self.current.next
         return data
+
